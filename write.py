@@ -68,8 +68,13 @@ def use_scenario(sheet_pft, scenario, sheet_pft_bas):
                     if valeur_pft == "None" or valeur_pft == "0" or valeur_pft == "":
                         sheet_pft_bas.cell(line, pos_consistances + 12 * num_consistance + annee + decalage).value = None
                     else:
-                        sheet_pft_bas.cell(line, pos_consistances + 12 * num_consistance + annee + decalage).value = \
-                            str(valeur_pft)
+                        valeur_pft = valeur_pft.replace(",", ".")
+                        try:
+                            sheet_pft_bas.cell(line, pos_consistances + 12 * num_consistance + annee + decalage).value \
+                                = float(valeur_pft)
+                        except:
+                            sheet_pft_bas.cell(line, pos_consistances + 12 * num_consistance + annee + decalage).value \
+                                = str(valeur_pft)
 
             # Ressources bleues
             for num_ressources in range(4):
