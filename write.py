@@ -85,7 +85,7 @@ def use_scenario(sheet_pft, scenario, sheet_pft_bas):
                                            pos_ressources_bleues + 12 * num_ressources + annee + decalage).value = None
                     else:
                         sheet_pft_bas.cell(line, pos_ressources_bleues + 12 * num_ressources + annee + decalage).value = \
-                            str(valeur_pft)
+                            float(valeur_pft)
 
             # Ressources autre DI
             for annee in range(2, 2 + decalage):
@@ -97,7 +97,7 @@ def use_scenario(sheet_pft, scenario, sheet_pft_bas):
                 if valeur_pft == "None" or valeur_pft == "0" or valeur_pft == "":
                     sheet_pft_bas.cell(line, pos_ressources_autre_di + annee + decalage).value = None
                 else:
-                    sheet_pft_bas.cell(line, pos_ressources_autre_di + annee + decalage).value = str(valeur_pft)
+                    sheet_pft_bas.cell(line, pos_ressources_autre_di + annee + decalage).value = float(valeur_pft)
 
             # Probable
             for annee in range(2, 2 + decalage):
@@ -109,7 +109,7 @@ def use_scenario(sheet_pft, scenario, sheet_pft_bas):
                 if valeur_pft == "None" or valeur_pft == "0" or valeur_pft == "":
                     sheet_pft_bas.cell(line, pos_probable + annee + decalage).value = None
                 else:
-                    sheet_pft_bas.cell(line, pos_probable + annee + decalage).value = str(valeur_pft)
+                    sheet_pft_bas.cell(line, pos_probable + annee + decalage).value = float(valeur_pft)
 
             # Jalons
             if not(statut == "Jalons manquants" or statut == "---"):
