@@ -106,7 +106,6 @@ def use_scenario(sheet_pft, scenario, sheet_pft_bas):
 
             for annee in range(2, 12 - decalage):
                 valeur_pft = str(sheet_pft.cell(line, pos_probable + annee).value)
-                sheet_pft_bas.cell(line, pos_probable + annee).value = None
                 if valeur_pft == "None" or valeur_pft == "0" or valeur_pft == "":
                     sheet_pft_bas.cell(line, pos_probable + annee + decalage).value = None
                 else:
