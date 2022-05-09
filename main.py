@@ -13,7 +13,7 @@ end = time.time()
 print(f"Temps de chargement : {end-start} sec")
 
 start = time.time()
-scenario = dico_scenario(sheet_scenario)
+scenario, dico_nd = dico_scenario(sheet_scenario)
 use_scenario(sheet_pft, scenario, sheet_pft_bas)
 end = time.time()
 

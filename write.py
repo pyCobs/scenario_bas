@@ -11,6 +11,8 @@ def use_scenario(sheet_pft, scenario, sheet_pft_bas):
     last_line = sheet_pft.max_row
     today = datetime.now()
 
+    col_typo = "B"
+    pos_typo = column_index_from_string(col_typo)
     col_statut = "E"
     pos_statut = column_index_from_string(col_statut)
     col_moa = "DD"
