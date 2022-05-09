@@ -18,20 +18,26 @@ def load_pft():
 
 def dico_scenario(ws_scenario):
     dico = {}
+    dico_nd = {"Liste des key ND"}
     first_line = 4
     last_line = 28
     col_sp = 5
     col_moa = 4
+    col_typo = 18
 
     for line in range(first_line, last_line+1):
         sp = ws_scenario.cell(line, col_sp).value
         # la clé est "MOA-SP" si il y a une SP, sinon il s'agit seulement de "MOA"
         if sp is None:
             dico[f"{ws_scenario.cell(line, col_moa).value}"] = {}
+            moa = str(ws_scenario.cell(line, col_moa).value)
             for column in range(9):
                 if not str(ws_scenario.cell(line, 9 + column).value) is None:
-                    dico[str(ws_scenario.cell(line, col_moa).value)][str(ws_scenario.cell(3, 9 + column).value)] \
+                    dico[moa][str(ws_scenario.cell(3, 9 + column).value)] \
                         = str(ws_scenario.cell(line, 9 + column).value)
+
+            if str(ws_scenario.cell(line, col_typo).value) == "ND":
+                dico_nd.add(moa)
 
         else:
             key = f"{ws_scenario.cell(line, col_moa).value}-{ws_scenario.cell(line, col_sp).value}"
@@ -41,4 +47,7 @@ def dico_scenario(ws_scenario):
                     dico[key][str(ws_scenario.cell(3, 9 + column).value)] \
                         = str(ws_scenario.cell(line, 9 + column).value)
 
-    return dico
+            if str(ws_scenario.cell(line, col_typo).value) == "ND":
+                dico_nd.add(key)
+
+    return dico, dico_nd
