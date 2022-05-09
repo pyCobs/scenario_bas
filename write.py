@@ -9,7 +9,9 @@ from util import addYears
 def use_scenario(sheet_pft, scenario, sheet_pft_bas, dico_nd):
     first_line = 13
     last_line = sheet_pft.max_row
-    today = datetime.now()
+    # today = datetime.now()
+    # Date des données, je ne décale que les jalons présents après cette date
+    today = datetime.strptime("02/05/22 10:00:00", "%d/%m/%y %H:%M:%S")
 
     col_typo = "B"
     pos_typo = column_index_from_string(col_typo)
