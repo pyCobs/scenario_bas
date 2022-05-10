@@ -19,7 +19,7 @@ def load_pft():
 def dico_scenario(ws_scenario):
     dico = {}
     dico_nd = {"Liste des key ND"}
-    first_line = 4
+    first_line = 3
     last_line = 28
     col_sp = 5
     col_moa = 4
@@ -27,25 +27,23 @@ def dico_scenario(ws_scenario):
 
     for line in range(first_line, last_line+1):
         sp = ws_scenario.cell(line, col_sp).value
-        # la clé est "MOA-SP" si il y a une SP, sinon il s'agit seulement de "MOA"
+        # la clé est "MOA-SP" s'il y a une SP, sinon il s'agit seulement de "MOA"
         if sp is None:
-            dico[f"{ws_scenario.cell(line, col_moa).value}"] = {}
-            moa = str(ws_scenario.cell(line, col_moa).value)
+            key = str(ws_scenario.cell(line, col_moa).value)
+            dico[key] = {}
             for column in range(9):
-                if not str(ws_scenario.cell(line, 9 + column).value) is None:
-                    dico[moa][str(ws_scenario.cell(3, 9 + column).value)] \
-                        = str(ws_scenario.cell(line, 9 + column).value)
+                dico[key][str(ws_scenario.cell(2, 9 + column).value)] \
+                    = str(ws_scenario.cell(line, 9 + column).value or 0)
 
             if str(ws_scenario.cell(line, col_typo).value) == "ND":
-                dico_nd.add(moa)
+                dico_nd.add(key)
 
         else:
             key = f"{ws_scenario.cell(line, col_moa).value}-{ws_scenario.cell(line, col_sp).value}"
             dico[key] = {}
             for column in range(9):
-                if not str(ws_scenario.cell(line, 9 + column).value) is None:
-                    dico[key][str(ws_scenario.cell(3, 9 + column).value)] \
-                        = str(ws_scenario.cell(line, 9 + column).value)
+                dico[key][str(ws_scenario.cell(2, 9 + column).value)] \
+                    = str(ws_scenario.cell(line, 9 + column).value or 0)
 
             if str(ws_scenario.cell(line, col_typo).value) == "ND":
                 dico_nd.add(key)
