@@ -39,6 +39,12 @@ def use_scenario(sheet_pft, scenario, sheet_pft_bas, dico_nd):
     col_jalons = "SL"
     pos_jalons = int(column_index_from_string(col_jalons))
 
+    col_prio_inter = "YB"
+    pos_prio_inter = int(column_index_from_string(col_prio_inter))
+
+    col_decalage_inter = "YC"
+    pos_decalage_inter = int(column_index_from_string(col_decalage_inter))
+
     for line in range(first_line, last_line + 1):
         moa = str(sheet_pft.cell(line, pos_moa).value)
         sp = str(sheet_pft.cell(line, pos_sp).value)
@@ -52,15 +58,32 @@ def use_scenario(sheet_pft, scenario, sheet_pft_bas, dico_nd):
         elif couple in scenario:
             key = couple
 
-        if key is not None:
+        # même si ma clé est vide, je force le décalage si un décalage inter est renseigné
+        if sheet_pft.cell(line, pos_decalage_inter).value is None:
+            decalage_inter_is_filled = False
+        else:
+            decalage_inter_is_filled = True
+
+        if key is not None or decalage_inter_is_filled:
+
             # si la ligne du scénario n'est pas ND ou si la colonne B du portefeuille est Nd, je prends
-            if key not in dico_nd or typo == "ND":
-                prio = str(sheet_pft.cell(line, pos_prio).value)
+            if key not in dico_nd or typo == "ND" or decalage_inter_is_filled:
+                # si la pos_prio_inter est vide, je prends la prio classique
+                if sheet_pft.cell(line, pos_prio_inter).value is None:
+                    prio = str(sheet_pft.cell(line, pos_prio).value)
+                else:
+                    prio = str(sheet_pft.cell(line, pos_prio_inter).value)
+
                 if not prio.isdigit() or prio == "0":
                     prio = "9"
 
                 # j'applique le scénario à cette ligne
-                decalage = int(scenario[key][prio])
+                # si la colonne pos_decalage_inter est vide, je prends le décalage classique
+                if sheet_pft.cell(line, pos_decalage_inter).value is None:
+                    decalage = int(scenario[key][prio])
+                else:
+                    decalage = int(sheet_pft.cell(line, pos_decalage_inter).value)
+
                 sheet_pft_bas.cell(line, 1).value = decalage
 
                 # consistances
